@@ -141,14 +141,28 @@ require_once __DIR__.'/config_files.php';
 	// Check connection
 
 	if (mysqli_connect_errno())
-	  {
+	{
 	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  }
+    }
+    $sql = "CREATE USER '" . $dbuser . "'@'" . "localhost" . "' IDENTIFIED BY '" . $dbpass1 . "';";
+    $result = mysqli_query($con,$sql);
+    if (!$result) {
+        echo "Error creating user " . mysqli_error($con);
+    }
+    $sql = "GRANT ALL PRIVILEGES ON *.* TO '" . $dbuser . "'@'" . "localhost" . "';";
+    $result = mysqli_query($con,$sql);
+    if (!$result) {
+        echo "Error granting privileges " . mysqli_error($con);
+    }
+    $sql = "ALTER USER '" . $dbuser . "'@'" . "localhost" . "' IDENTIFIED WITH mysql_native_password BY '" . $dbpass1 . "';";
+    $result = mysqli_query($con,$sql);
 
-	$sql = "GRANT ALL ON *.* TO '" . $dbuser . "'@'" . $servername . "' IDENTIFIED BY '" . $dbpass1 . "' WITH GRANT OPTION;";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
-	echo "Success!<br>";
+	if (!$result) {
+        echo "Error granting user rights " . mysqli_error($con);
+    } else {
+        echo "Success!<br>";
+    }
+    mysqli_close($con);
 	flush();
 
 	//-----------------Run The Schema File-------------------------

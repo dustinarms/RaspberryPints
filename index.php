@@ -13,18 +13,20 @@
 	
 	if($db){
 		// Connect to the database
-		db();
-		
-		
+		$link = db();
+
+    if (!$link) {
+        echo("Connect failed: %s\n" . mysqli_connect_error());
+    }
 		$config = array();
 		$sql = "SELECT * FROM config";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($link,$sql);
 		while($c = mysqli_fetch_array($qry)){
 			$config[$c['configName']] = $c['configValue'];
 		}
 		
 		$sql =  "SELECT * FROM vwGetActiveTaps";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($link,$sql);
 		while($b = mysqli_fetch_array($qry))
 		{
 			$beeritem = array(
@@ -45,7 +47,7 @@
 			$beers[$b['tapNumber']] = $beeritem;	
 		}
 		
-		$tapManager = new TapManager();
+		$tapManager = new TapManager($link);
 		$numberOfTaps = $tapManager->GetTapNumber();
 	}
 ?>
@@ -298,7 +300,7 @@
 									<td class="ibu">
 										<h3></h3>										
 										<div class="ibu-container">
-											<div class="ibu-indicator"><div class="ibu-full" style="height:0%"></div></div>
+											<div class="ibu-indicator"><div class="ibu-full" style="height:0"></div></div>
 										</div>								
 										<h2></h2>
 									</td>
@@ -314,7 +316,7 @@
 									<td class="abv">
 										<h3></h3>
 										<div class="abv-container">
-											<div class="abv-indicator"><div class="abv-full" style="height:0%"></div></div>
+											<div class="abv-indicator"><div class="abv-full" style="height:0"></div></div>
 										</div>
 										<h2></h2>
 									</td>
@@ -324,7 +326,7 @@
 									<td class="keg">
 										<h3></h3>
 										<div class="keg-container">
-											<div class="keg-indicator"><div class="keg-full keg-empty" style="height:0%"></div></div>
+											<div class="keg-indicator"><div class="keg-full keg-empty" style="height:0"></div></div>
 										</div>
 										<h2>0 fl oz left</h2>
 									</td>

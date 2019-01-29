@@ -14,12 +14,12 @@ $mypassword=md5($_POST['mypassword']);
 $myusername = stripslashes($myusername);
 $mypassword = stripslashes($mypassword);
 
-$myusername = mysqli_real_escape_string($myusername);
-$mypassword = mysqli_real_escape_string($mypassword);
+$myusername = mysqli_real_escape_string($link,$myusername);
+$mypassword = mysqli_real_escape_string($link,$mypassword);
 
 
 $sql="SELECT * FROM $tbl_name WHERE username='$myusername' and password='$mypassword'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link,$sql);
 
 // mysqli_num_row is counting table row
 $count=mysqli_num_rows($result);
