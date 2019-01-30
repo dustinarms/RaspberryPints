@@ -73,10 +73,10 @@ you are certain you need to change it.
 	<table>
 			<tr>
 				<td>
-					<label for="textfield"><strong>Database Server: (required)</strong></label> 
+					<label for="textfield"><strong>Database Server and port: (required)</strong></label>
 				</td>
 				<td>
-					<input minlength="2" required class="inputbox" value="localhost" type="text" name="servername" required>				
+					<input minlength="2" required class="inputbox" value="localhost:3306" type="text" name="servername" required>
 				</td>
 			</tr>
 			<tr>

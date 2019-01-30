@@ -3,15 +3,21 @@ require_once __DIR__.'/../../../includes/config_names.php';
 require_once __DIR__.'/../models/tap.php';
 
 class TapManager{
-	
+
+    protected $link = null;
+
+    public function __construct($link){
+        $this->link = $link;
+    }
+
 	function Save($tap){
 		$sql = "";
 		
 		$sql="UPDATE kegs k SET k.kegStatusCode = 'SERVING' WHERE id = " . $tap->get_kegId();
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 	
 		$sql="UPDATE taps SET active = 0, modifiedDate = NOW() WHERE active = 1 AND tapNumber = " . $tap->get_tapNumber();
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 		
 		if($tap->get_id()){
 			$sql = 	"UPDATE taps " .
@@ -35,14 +41,14 @@ class TapManager{
 		
 		//echo $sql; exit();
 		
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 	}
 	
 	function GetById($id){
 		$id = (int) preg_replace('/\D/', '', $id);
 	
 		$sql="SELECT * FROM taps WHERE id = $id";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		if( $i = mysqli_fetch_array($qry) ){
 			$tap = new Tap();
@@ -55,16 +61,16 @@ class TapManager{
 
 	function updateTapNumber($newTapNumber){
 		$sql="UPDATE config SET configValue = $newTapNumber WHERE configName = '".ConfigNames::NumberOfTaps."'";
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 		
 		$sql="UPDATE taps SET active = 0, modifiedDate = NOW() WHERE active = 1 AND tapNumber > $newTapNumber";
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 	}
 
 	function getTapNumber(){
 		$sql="SELECT configValue FROM config WHERE configName = '".ConfigNames::NumberOfTaps."'";
 
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		$config = mysqli_fetch_array($qry);
 		
 		if( $config != false ){
@@ -74,7 +80,7 @@ class TapManager{
 
 	function getActiveTaps(){
 		$sql="SELECT * FROM taps WHERE active = 1";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		$taps = array();
 		while($i = mysqli_fetch_array($qry)){
@@ -88,9 +94,9 @@ class TapManager{
 	
 	function closeTap($id){
 		$sql="UPDATE taps SET active = 0, modifiedDate = NOW() WHERE id = $id";
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 		
 		$sql="UPDATE kegs k, taps t SET k.kegStatusCode = 'NEEDS_CLEANING' WHERE t.kegId = k.id AND t.Id = $id";
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 	}
 }

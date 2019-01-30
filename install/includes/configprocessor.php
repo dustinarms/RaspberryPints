@@ -141,14 +141,28 @@ require_once __DIR__.'/config_files.php';
 	// Check connection
 
 	if (mysqli_connect_errno())
-	  {
+	{
 	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  }
+    }
+    $sql = "CREATE USER '" . $dbuser . "'@'" . "localhost" . "' IDENTIFIED BY '" . $dbpass1 . "';";
+    $result = mysqli_query($con,$sql);
+    if (!$result) {
+        echo "Error creating user " . mysqli_error($con);
+    }
+    $sql = "GRANT ALL PRIVILEGES ON *.* TO '" . $dbuser . "'@'" . "localhost" . "';";
+    $result = mysqli_query($con,$sql);
+    if (!$result) {
+        echo "Error granting privileges " . mysqli_error($con);
+    }
+    $sql = "ALTER USER '" . $dbuser . "'@'" . "localhost" . "' IDENTIFIED WITH mysql_native_password BY '" . $dbpass1 . "';";
+    $result = mysqli_query($con,$sql);
 
-	$sql = "GRANT ALL ON *.* TO '" . $dbuser . "'@'" . $servername . "' IDENTIFIED BY '" . $dbpass1 . "' WITH GRANT OPTION;";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
-	echo "Success!<br>";
+	if (!$result) {
+        echo "Error granting user rights " . mysqli_error($con);
+    } else {
+        echo "Success!<br>";
+    }
+    mysqli_close($con);
 	flush();
 
 	//-----------------Run The Schema File-------------------------
@@ -164,7 +178,7 @@ require_once __DIR__.'/config_files.php';
 	$sql_query = split_sql_file($sql_query, ';');
 
 
-	mysqli_connect($servername,'root',$rootpass) or die('error connection');
+	$con=mysqli_connect($servername,'root',$rootpass) or die('error connection');
 
 	$i=1;
 	foreach($sql_query as $sql){
@@ -172,7 +186,7 @@ require_once __DIR__.'/config_files.php';
 	//echo "	";
 	//echo $sql;
 	//echo "<br>";
-	mysqli_query($sql) or die('error in query');
+	mysqli_query($con,$sql) or die('error in query' . mysqli_error($con));
 	}
 
 	echo "Success!<br>";
@@ -211,13 +225,13 @@ require_once __DIR__.'/config_files.php';
 			$sql_query = split_sql_file($sql_query, ';');
 
 
-			mysqli_connect($servername,'root',$rootpass) or die('error connection');
+			$con=mysqli_connect($servername,'root',$rootpass) or die('error connection');
 
 			$i=1;
 			foreach($sql_query as $sql){
 			//echo $i++;
 			//echo "	";
-			mysqli_query($sql) or die('error in query');
+			mysqli_query($con,$sql) or die('error in query' . mysqli_error($con));
 			}
 
 			

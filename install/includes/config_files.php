@@ -7,8 +7,8 @@
 	$mainconfigstring = "<?php \n";
 	$mainconfigstring .= "    function db() {\n";
 	$mainconfigstring .= '        $link = ';
-	$mainconfigstring .= "mysqli_connect('" . $servername . "', '" . $dbuser . "', '" . $dbpass1 . "');\n";
-	$mainconfigstring .= "        mysqli_select_db('raspberrypints');\n";
+	$mainconfigstring .= "mysqli_connect('" . $servername . "', '" . $dbuser . "', '" . $dbpass1 . "', 'raspberrypints');\n";
+	$mainconfigstring .= '        return $link;' . "\n";
 	$mainconfigstring .= "	}\n";
 	$mainconfigstring .= '    $rpintsversion="1.0.0.279";' . "\n";
 	$mainconfigstring .= "?>";
@@ -21,8 +21,7 @@
 	$adminconfig1 .= '   $db_name="raspberrypints"; // Database name' . "\n";
 	$adminconfig1 .= '   $tbl_name="users";' . "\n";
 	$adminconfig1 .= '   //Connect to server and select databse.' . "\n";
-	$adminconfig1 .= '   mysqli_connect("$host", "$username", "$password")or die("cannot connect to server");' . "\n";
-	$adminconfig1 .= '   mysqli_select_db("$db_name")or die("cannot select DB");' . "\n";
+	$adminconfig1 .= '   $link=mysqli_connect("$host", "$username", "$password", "$db_name")or die("cannot connect to server");' . "\n";
 	$adminconfig1 .= '?>';
 	
 	//Admin config file - /admin/configp.php
