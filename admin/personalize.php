@@ -62,7 +62,7 @@ include 'header.php';
 
 		<?php
 			$sql="SELECT configValue FROM config WHERE configName ='".ConfigNames::HeaderText."'";
-			$result=mysqli_query($sql);
+			$result=mysqli_query($link,$sql);
 			$headerText=mysqli_fetch_array($result);
 		?>
       <a name="header"></a> 

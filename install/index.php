@@ -51,9 +51,9 @@
 		echo 'We noticed that you already have installed RPints. Please select an option from the menu below';
 			//Check versions
 			require '../includes/config.php';
-			db();
+			$link = db();
 			$sql = 'SELECT id,configName,configValue FROM config where configname = "version"';
-			$qry = mysqli_query($sql);
+			$qry = mysqli_query($link,$sql);
 			$dbversion = mysqli_result($qry,0,2);
 		
 			echo '<br><select name="selectaction">';

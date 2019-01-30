@@ -10,7 +10,7 @@ $beerid=$_GET['beerid'];
 
 // Retrieve data from database
 $sql="SELECT * FROM $tbl_name WHERE beerid='$beerid'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link,$sql);
 
 $rows=mysqli_fetch_array($result);
 ?>

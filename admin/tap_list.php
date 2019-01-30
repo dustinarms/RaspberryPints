@@ -18,9 +18,9 @@ require_once __DIR__.'/includes/managers/tap_manager.php';
 
 
 $htmlHelper = new HtmlHelper();
-$tapManager = new TapManager();
-$beerManager = new BeerManager();
-$kegManager = new KegManager();
+$tapManager = new TapManager($link);
+$beerManager = new BeerManager($link);
+$kegManager = new KegManager($link);
 
 if( isset($_POST['updateNumberOfTaps'])) {
 	$tapManager->updateTapNumber($_POST['numberOfTaps']);	

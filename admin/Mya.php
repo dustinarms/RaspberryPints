@@ -49,7 +49,7 @@ include 'header.php';
  <?php
   
   $sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
-  $result=mysqli_query($sql);
+  $result=mysqli_query($link,$sql);
 
 echo mysqli_result($result, 0, 'name');
 ?><br />
@@ -57,7 +57,7 @@ echo mysqli_result($result, 0, 'name');
    <?php
   
   $sql="SELECT `username` FROM `users` WHERE username='$_SESSION[myusername]'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link,$sql);
 
 echo mysqli_result($result, 0, 'username');
 
@@ -66,7 +66,7 @@ echo mysqli_result($result, 0, 'username');
   <?php
   
   $sql="SELECT `email` FROM `users` WHERE username='$_SESSION[myusername]'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link,$sql);
 
 echo mysqli_result($result, 0, 'email');
 

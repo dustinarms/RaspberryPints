@@ -3,9 +3,16 @@ require_once __DIR__.'/../models/kegStatus.php';
 
 class KegStatusManager{
 
-	function GetAll(){
+    protected $link = null;
+
+    public function __construct($link){
+        $this->link = $link;
+    }
+
+
+    function GetAll(){
 		$sql="SELECT * FROM kegStatuses ORDER BY name";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		$kegStatuses = array();
 		while($i = mysqli_fetch_array($qry)){
@@ -19,7 +26,7 @@ class KegStatusManager{
 		
 	function GetByCode($code){
 		$sql="SELECT * FROM kegStatuses WHERE code = '$code'";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		if( $i = mysqli_fetch_array($qry) ){
 			$kegStatus = new KegStatus();
