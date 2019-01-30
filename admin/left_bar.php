@@ -5,9 +5,16 @@
 <div id="welcome"> &nbsp; Welcome, <br />
 	&nbsp;
 	<?php
-		$sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
-		$result=mysqli_query($sql);
-		echo mysqli_result($result, 0, 'name');
+		$link=mysqli_connect('localhost','root' ,'somebeer' ,'raspberrypints' );
+        $sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
+		$result=mysqli_query($link, $sql);
+        while ($row = mysqli_fetch_assoc($result))
+        {
+            echo $row["name"];
+        }
+		echo mysqli_fetch_assoc($result);
+		/*echo mysqli_result($result, 1, 'name');*/
+
 	?>
 </div>
 
