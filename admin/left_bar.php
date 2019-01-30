@@ -12,9 +12,6 @@
         {
             echo $row["name"];
         }
-		echo mysqli_fetch_assoc($result);
-		/*echo mysqli_result($result, 1, 'name');*/
-
 	?>
 </div>
 
