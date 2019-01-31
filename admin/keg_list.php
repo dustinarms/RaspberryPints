@@ -18,9 +18,9 @@ require_once __DIR__.'/includes/managers/kegStatus_manager.php';
 require_once __DIR__.'/includes/managers/kegType_manager.php';
 
 $htmlHelper = new HtmlHelper();
-$kegManager = new KegManager();
-$kegStatusManager = new KegStatusManager();
-$kegTypeManager = new KegTypeManager();
+$kegManager = new KegManager($link);
+$kegStatusManager = new KegStatusManager($link);
+$kegTypeManager = new KegTypeManager($link);
 
 
 

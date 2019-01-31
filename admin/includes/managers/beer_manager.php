@@ -3,6 +3,12 @@ require_once __DIR__.'/../models/beer.php';
 
 class BeerManager{
 
+    protected $link = null;
+
+    public function __construct($link){
+        $this->link = $link;
+    }
+
 	function Save($beer){
 		$sql = "";
 		if($beer->get_id()){
@@ -33,12 +39,12 @@ class BeerManager{
 		
 		//echo $sql; exit();
 		
-		mysqli_query($sql);
+		mysqli_query($this->link,$sql);
 	}
 	
 	function GetAll(){
 		$sql="SELECT * FROM beers ORDER BY name";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		$beers = array();
 		while($i = mysqli_fetch_array($qry)){
@@ -52,7 +58,7 @@ class BeerManager{
 	
 	function GetAllActive(){
 		$sql="SELECT * FROM beers WHERE active = 1 ORDER BY name";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		$beers = array();
 		while($i = mysqli_fetch_array($qry)){
@@ -66,7 +72,7 @@ class BeerManager{
 		
 	function GetById($id){
 		$sql="SELECT * FROM beers WHERE id = $id";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		if( $i = mysqli_fetch_array($qry) ){
 			$beer = new Beer();
@@ -79,7 +85,7 @@ class BeerManager{
 	
 	function Inactivate($id){
 		$sql = "SELECT * FROM taps WHERE beerId = $id AND active = 1";
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		if( mysqli_fetch_array($qry) ){
 			$_SESSION['errorMessage'] = "Beer is associated with an active tap and could not be deleted.";
@@ -88,7 +94,7 @@ class BeerManager{
 	
 		$sql="UPDATE beers SET active = 0 WHERE id = $id";
 		//echo $sql; exit();
-		$qry = mysqli_query($sql);
+		$qry = mysqli_query($this->link,$sql);
 		
 		$_SESSION['successMessage'] = "Beer successfully deleted.";
 	}

@@ -5,7 +5,6 @@
 <div id="welcome"> &nbsp; Welcome, <br />
 	&nbsp;
 	<?php
-		$link=mysqli_connect('localhost','root' ,'somebeer' ,'raspberrypints' );
         $sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
 		$result=mysqli_query($link, $sql);
         while ($row = mysqli_fetch_assoc($result))

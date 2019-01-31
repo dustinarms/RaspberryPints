@@ -17,9 +17,9 @@ require_once 'includes/managers/kegStatus_manager.php';
 require_once 'includes/managers/kegType_manager.php';
 
 $htmlHelper = new HtmlHelper();
-$kegManager = new KegManager();
-$kegStatusManager = new KegStatusManager();
-$kegTypeManager = new KegTypeManager();
+$kegManager = new KegManager($link);
+$kegStatusManager = new KegStatusManager($link);
+$kegTypeManager = new KegTypeManager($link);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -81,7 +81,7 @@ include 'header.php';
 		<table width="950" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td>
-					Label: <b><font color="red">*</color></b>
+					Label: <b><font color="red">*</font></b>
 				</td>
 				<td>
 					<input type="text" id="label" class="mediumbox" name="label" value="<?php echo $keg->get_label() ?>" />
@@ -89,7 +89,7 @@ include 'header.php';
 			</tr>
 			<tr>
 				<td>
-					Type: <b><font color="red">*</color></b>
+					Type: <b><font color="red">*</font></b>
 				</td>
 				<td>
 					<?php echo $htmlHelper->ToSelectList("kegTypeId", $kegTypeList, "name", "id", $keg->get_kegTypeId(), "Select One"); ?>
@@ -153,7 +153,7 @@ include 'header.php';
 			</tr>
 			<tr>
 				<td>
-					Status: <b><font color="red">*</color></b>
+					Status: <b><font color="red">*</font></b>
 				</td>
 				<td>
 					<?php echo $htmlHelper->ToSelectList("kegStatusCode", $kegStatusList, "name", "code", $keg->get_kegStatusCode(), "Select One"); ?>

@@ -6,7 +6,7 @@ $email_to=$_POST['email_tou'];
 
 
 $sql="SELECT username FROM $tbl_name WHERE email='$email_to'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link,$sql);
 
 // if found this e-mail address, row must be 1 row
 // keep value in variable name "$count"
