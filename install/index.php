@@ -54,7 +54,10 @@
 			$link = db();
 			$sql = 'SELECT id,configName,configValue FROM config where configname = "version"';
 			$qry = mysqli_query($link,$sql);
-			$dbversion = mysqli_result($qry,0,2);
+
+            $row = mysqli_fetch_assoc($result);
+            $dbversion = $row["configvalue"];
+
 		
 			echo '<br><select name="selectaction">';
 			if ($dbversion != $rpintsversion) {
