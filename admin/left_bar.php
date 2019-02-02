@@ -7,10 +7,9 @@
 	<?php
         $sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
 		$result=mysqli_query($link, $sql);
-        while ($row = mysqli_fetch_assoc($result))
-        {
-            echo $row["name"];
-        }
+
+        $row = mysqli_fetch_assoc($result);
+        echo $row["name"];
 	?>
 </div>
 
